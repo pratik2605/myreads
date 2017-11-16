@@ -16,6 +16,13 @@ class SearchBooks extends Component {
         filteredBooks: []
     }
 
+	/**
+	 * Get the current shelf of the book if available else return `none`
+	 *
+	 * @var object currentBooks
+	 * @var object book
+	 * @return string
+	 */
     getCurrentShelf = (currentBooks, book) => {
         let bookFound = currentBooks.filter((currentBook) => { return book.id === currentBook.id })
         if (bookFound.length > 0) {
@@ -24,6 +31,12 @@ class SearchBooks extends Component {
         return 'none';
     }
 
+	/**
+	 * Search books based on the query
+	 *
+	 * @var string query
+	 * @return object
+	 */
     filterBooks = (query) => {
         if (query) {
             this.setState({ query: query.trim() })
@@ -38,24 +51,30 @@ class SearchBooks extends Component {
         return (
             <div className="search-books">
   			<div className="search-books-bar">
-  			  <Link className="close-search" to="/">Close</Link>
-  			  <div className="search-books-input-wrapper">
-  				<input
-                    type="text"
-                    placeholder="Search by title or author"
-                    onChange={(event) => this.filterBooks(event.target.value)}
-                    value={query}
-                />
-  			  </div>
+				<Link className="close-search" to="/">Close</Link>
+					<div className="search-books-input-wrapper">
+						<input
+							type="text"
+							placeholder="Search by title or author"
+							onChange={(event) => this.filterBooks(event.target.value)}
+							value={query}
+						/>
+					</div>
   			</div>
   			<div className="search-books-results">
-  			  <ol className="books-grid">
-                  {this.state.filteredBooks.length > 0 && this.state.filteredBooks.map((book) => (
-                      <li key={book.id}>
-                        <Book book={book} currentShelf={this.getCurrentShelf(books, book)} onChangeBookShelf={onChangeBookShelf}/>
-                      </li>
-                  ))}
-              </ol>
+				<ol className="books-grid">
+					{
+						this.state.filteredBooks.length > 0 && this.state.filteredBooks.map((book) => (
+							<li key={book.id}>
+								<Book
+									book={book}
+									currentShelf={this.getCurrentShelf(books, book)}
+									onChangeBookShelf={onChangeBookShelf}
+								/>
+							</li>
+						))
+					}
+				</ol>
   			</div>
   		  </div>
         )
