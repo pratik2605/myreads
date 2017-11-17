@@ -32,9 +32,12 @@ class BooksApp extends Component {
 	 * @var string bookShelf
 	 */
 	changeBookShelf = (book, bookShelf) => {
-		if (bookShelf) {
-			BooksAPI.update(book, bookShelf).then((response) => {
-				this.getAllBooks()
+		if (bookShelf && book.shelf !== bookShelf) {
+			BooksAPI.update(book, bookShelf).then(() => {
+				book.shelf = bookShelf
+				this.setState((state) => ({
+					books: state.books.filter(b => b.id !== book.id).concat([book])
+				}))
 			})
 		}
 	}

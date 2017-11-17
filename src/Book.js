@@ -1,16 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-class Book extends Component {
-	static propTypes = {
-		book: PropTypes.object.isRequired,
-		onChangeBookShelf: PropTypes.func.isRequired,
-		currentShelf: PropTypes.string
-	}
-
-	render() {
-		const { book, onChangeBookShelf, currentShelf } = this.props
-		return (
+const Book = (props) => {
+	const { book, onChangeBookShelf, currentShelf } = props
+	return (
 			<div className="book">
 			  <div className="book-top">
 				<div className="book-cover"
@@ -31,8 +24,13 @@ class Book extends Component {
 			  <div className="book-title">{book.title}</div>
 			  <div className="book-authors">{book.subtitle}</div>
 			</div>
-		)
-	}
+	)
+}
+
+Book.propTypes = {
+	book: PropTypes.object.isRequired,
+	onChangeBookShelf: PropTypes.func.isRequired,
+	currentShelf: PropTypes.string
 }
 
 export default Book
