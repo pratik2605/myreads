@@ -9,7 +9,7 @@ const shelfs = [
 	{ name: 'read', title: 'Read' }
 ]
 
-const ListBooks = (props) => {
+const ListBooks = props => {
 	const { books, onChangeBookShelf } = props
 
 	return (
@@ -19,36 +19,34 @@ const ListBooks = (props) => {
 			</div>
 			<div className="list-books-content">
 				<div>
-					{
-						shelfs.map((shelf) => (
-							<div className="bookshelf" key={shelf.name}>
-								<h2 className="bookshelf-title">{shelf.title}</h2>
-								<div className="bookshelf-books">
-									<ol className="books-grid">
-										{
-											books.filter(
-												(book) => {
-													return book.shelf === shelf.name
-												}
-											).map((book) => (
-												<li key={book.id}>
-													<Book
-														book={book}
-														onChangeBookShelf={onChangeBookShelf}
-													/>
-												</li>
-											))
-										}
-									</ol>
-								</div>
+					{shelfs.map(shelf => (
+						<div className="bookshelf" key={shelf.name}>
+							<h2 className="bookshelf-title">{shelf.title}</h2>
+							<div className="bookshelf-books">
+								<ol className="books-grid">
+									{books
+										.filter(book => {
+											return book.shelf === shelf.name
+										})
+										.map(book => (
+											<li key={book.id}>
+												<Book
+													book={book}
+													onChangeBookShelf={
+														onChangeBookShelf
+													}
+												/>
+											</li>
+										))}
+								</ol>
 							</div>
-						))
-					}
+						</div>
+					))}
 				</div>
 			</div>
-		  <div className="open-search">
+			<div className="open-search">
 				<Link to="/search">Add a book</Link>
-		  </div>
+			</div>
 		</div>
 	)
 }

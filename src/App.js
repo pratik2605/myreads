@@ -7,7 +7,7 @@ import './App.css'
 
 class BooksApp extends Component {
 	state = {
-		books: [],
+		books: []
 	}
 
 	componentDidMount() {
@@ -20,8 +20,8 @@ class BooksApp extends Component {
 	 * @return object
 	 */
 	getAllBooks = () => {
-		BooksAPI.getAll().then((books) => {
-			this.setState( { books } )
+		BooksAPI.getAll().then(books => {
+			this.setState({ books })
 		})
 	}
 
@@ -35,26 +35,42 @@ class BooksApp extends Component {
 		if (bookShelf && book.shelf !== bookShelf) {
 			BooksAPI.update(book, bookShelf).then(() => {
 				book.shelf = bookShelf
-				this.setState((state) => ({
-					books: state.books.filter(b => b.id !== book.id).concat([book])
+				this.setState(state => ({
+					books: state.books
+						.filter(b => b.id !== book.id)
+						.concat([book])
 				}))
 			})
 		}
 	}
 
 	/**
-	* Renders the ListBooks & SearchBooks components
-	*/
+	 * Renders the ListBooks & SearchBooks components
+	 */
 	render() {
 		return (
-		<div className="app">
-			<Route exact path="/" render={() => (
-				<ListBooks books={this.state.books} onChangeBookShelf={this.changeBookShelf} />
-			)}/>
-			<Route exact path="/search" render={() => (
-				<SearchBooks books={this.state.books} onChangeBookShelf={this.changeBookShelf} />
-			)}/>
-		</div>
+			<div className="app">
+				<Route
+					exact
+					path="/"
+					render={() => (
+						<ListBooks
+							books={this.state.books}
+							onChangeBookShelf={this.changeBookShelf}
+						/>
+					)}
+				/>
+				<Route
+					exact
+					path="/search"
+					render={() => (
+						<SearchBooks
+							books={this.state.books}
+							onChangeBookShelf={this.changeBookShelf}
+						/>
+					)}
+				/>
+			</div>
 		)
 	}
 }
